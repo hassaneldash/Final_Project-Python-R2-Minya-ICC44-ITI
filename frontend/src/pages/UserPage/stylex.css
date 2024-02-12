@@ -194,7 +194,7 @@
 }
 
 .social-containerx {
-  margin: 20px 0;
+  margin: 5px 0;
 }
 
 .social-containerx a {
@@ -215,5 +215,6 @@ select.input-error {
 
 .error {
   color: red;
-  font-size: 14px;
+  font-size: 12px;
+  margin: 1px !important;
 }

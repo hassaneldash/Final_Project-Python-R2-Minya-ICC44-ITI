@@ -16,6 +16,7 @@ const Product = ({product}) => {
   };
 
   const handleToggleFavorites = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     if (isMovieInFavorites()) {
       dispatch(removeFromFavorites(product?.id));
@@ -23,6 +24,7 @@ const Product = ({product}) => {
       dispatch(addToFavorites(product));
     }
   };
+  
 
   return (
     <Link to = {`/product/${product?.id}`} key = {product?.id}>

@@ -1,8 +1,35 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useState } from "react";
-import ValidSchema from "../../schemas/regSchema";
 import Alert from "react-bootstrap/Alert";
+import * as yup from "yup";
+
+const loginPat = /^[a-zA-Z0-9._]+@[a-z]{1,8}\.(com|eg|gov|edu)$/;
+const passwordRegex =
+  /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=])(?=.*[^\w\d\s]).{8,}$/;
+
+
+  const ValidSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Please Enter a Valid Email")
+      .required("Must Add Email")
+      .matches(loginPat, "Email Didn't Meet Requirements should contain @ and ."),
+    password: yup
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(20, "Password must be at most 20 characters")
+      .matches(
+        passwordRegex,
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long"
+      )
+      .required("Must Fill this Field"),
+    name: yup
+      .string()
+      .min(3, "Name must be at least 3 letters")
+      .max(15, "Name must be maximum 15 letters")
+      .required("Must Fill this Field"),
+  });
 
 function RegisterComponent() {
   let accounts = JSON.parse(localStorage.getItem("Account Storage") || "[]");
@@ -21,49 +48,19 @@ function RegisterComponent() {
         if (isValidEmail(values.email)) {
           accounts.push(values);
           localStorage.setItem("Account Storage", JSON.stringify(accounts));
-          resetForm(); // h3ml reset ll form l ana 3mltha ashan afdeha
-          // bas mesh htban ashan hyn2lo
+          resetForm();
         } else {
           setIsSucess(true);
         }
       },
     });
 
-  // hnshghl l function bas enha tdini error bdl mt3ml push
 
   const isValidEmail = (email) => {
     const found = accounts.find((item) => item.email === email);
     return !found;
   };
 
-  // const [state, setState] = React.useState({
-  //   name: "",
-  //   email: "",
-  //   password: ""
-  // });
-  // const handleChange = evt => {
-  //   const value = evt.target.value;
-  //   setState({
-  //     ...state,
-  //     [evt.target.name]: value
-  //   });
-  // };
-
-  // const handleOnSubmit = evt => {
-  //   evt.preventDefault();
-
-  //   const { name, email, password } = state;
-  //   alert(
-  //     `You are sign up with name: ${name} email: ${email} and password: ${password}`
-  //   );
-
-  //   for (const key in state) {
-  //     setState({
-  //       ...state,
-  //       [key]: ""
-  //     });
-  //   }
-  // };
 
   return (
     <>
@@ -80,10 +77,7 @@ function RegisterComponent() {
                 className="fa-brands fa-google"
               ></i>
             </a>
-            {/* <a href="#" className="icon a"><i id="id-btn-register-twitter" className="fa-brands fa-twitter"></i></a>
-          <a href="#" className="icon a"><i id="id-btn-register-github" className="fa-brands fa-github"></i></a>
-          <a href="#" className="icon a"><i id="id-btn-register-microsoft" className="fa-brands fa-microsoft"></i></a>
-          <a href="#" className="icon a"><i id="id-btn-register-yahoo" className="fa-brands fa-yahoo"></i></a> */}
+
           </div>
           <span>or use your email for registration</span>
           <input
@@ -125,11 +119,6 @@ function RegisterComponent() {
           {errors.password && touched.password && (
             <p className="error">{errors.password}</p>
           )}
-          {/* <select id="id-select-reg-usertype" required>
-          <option value="admin">Admin</option>
-          <option value="customer">Customer</option>
-        </select> */}
-          {/* <span>By clicking "Register," you agree to our <a className="a" href="http://">Terms of Use</a> and our <a href="http://">Privacy Policy</a>.</span> */}
           <button type="submit" className="button">
             Register
           </button>
