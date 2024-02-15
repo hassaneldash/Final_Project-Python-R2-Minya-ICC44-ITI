@@ -53,12 +53,12 @@ const Product = ({product}) => {
           <img className='img-cover img-fluid' src = {product?.images[0]} alt = {product.title} />
         </div>
         <div className='product-item-info fs-14'>
+          <div className='title py-2' style={{height : '60px'}}>
+            {product?.title}
+          </div>
           <div className='brand' style={{height : '40px'}} >
             <span>Brand: </span>
             <span className='fw-7'>{product?.brand}</span>
-          </div>
-          <div className='title py-2' style={{height : '60px'}}>
-            {product?.title}
           </div>
           <div className='price flex align-center justify-center'>
             <span className='old-price'>
