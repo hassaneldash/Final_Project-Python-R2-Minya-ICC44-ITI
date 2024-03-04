@@ -30,7 +30,7 @@ const CartPage = () => {
           <div className='cart-chead bg-white'>
             <div className='cart-ctr fw-6 font-manrope fs-15'>
               <div className='cart-cth'>
-                <span className='cart-ctxt'>S.N.</span>
+                <span className='cart-ctxt'>No.</span>
               </div>
               <div className='cart-cth'>
                 <span className='cart-ctxt'>Product</span>

@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./stylex.css";
+import { Link, useNavigate } from "react-router-dom";
 import RegisterComponent from "./RegisterComponent";
 import LoginComponent from "./LoginComponent";
 
 const UserComponent = () => {
   const [type, setType] = useState("signIn");
+  const navigate = useNavigate();
   const handleOnClick = text => {
     if (text !== type) {
       setType(text);
       return;
     }
   };
+  useEffect(() => {
+    if (sessionStorage.getItem("login") != null) {
+      navigate("/");
+    }else{
+      if (localStorage.getItem("Account Storage") != null) {
+        setType("signIn");
+      }else{
+        setType("signUp");
+      }
+    }
+  }, [navigate]);
   const containerxClass =
     "containerx " + (type === "signUp" ? "right-panel-active" : "");
   return (

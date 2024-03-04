@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./Navbar.css";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate
 import { useSelector, useDispatch } from 'react-redux';
 import { setSidebarOn, setSidebarOff } from '../../store/sidebarSlice';
 import { getAllCategories } from '../../store/categorySlice';
@@ -17,18 +17,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const isUserLoggedIn = sessionStorage.getItem("login") === null;
 
-  // const handleSearch = (e) => {
-  //   e.preventDefault();
-  //   if (searchTerm.trim() !== '') {
-  //     navigate(`/search/${searchTerm}`);
-  //   }
-  // }
-
-  // const handleKeyDown = (e) => {
-  //   if (e.key === 'Enter') {
-  //     handleSearch(e);
-  //   }
-  // }
   const handleSearch = (e) => {
     e.preventDefault();
     const newSearchTerm = e.target.value;
@@ -67,12 +55,12 @@ const Navbar = () => {
     <nav className='navbar'>
       <div className='navbar-cnt flex align-center'>
         <div className='brand-and-toggler flex align-center'>
-        <button type="button" className='sidebar-show-btn text-white' onClick={toggleSidebar}>
+          <button type="button" className='sidebar-show-btn text-white' onClick={toggleSidebar}>
             <i className='fas fa-bars'></i>
           </button>
-          <Link to = "/" className='navbar-brand flex align-center'>
+          <Link to="/" className='navbar-brand flex align-center'>
             <span className='navbar-brand-ico'>
-            <i class="fa-brands fa-shopify"></i>
+              <i class="fa-brands fa-shopify"></i>
             </span>
             <span className='navbar-brand-txt mx-2'>
               <span className='fw-7'>Easy</span>Trade.
@@ -80,30 +68,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-
-
         <div className='navbar-collapse w-100'>
-
-
-
-
-
-          {/* <div className='navbar-search bg-white'>
-            <form onSubmit={handleSearch}>
-              <div className='flex align-center'>
-                <input type="text" className='form-control fs-14' placeholder='Search items here' value={searchTerm}
-                onChange={
-                  handleSearch
-                }
-                  // (e) => setSearchTerm(e.target.value)} 
-                  onKeyDown={handleKeyDown}/>
-              <Link to={`search/${searchTerm}`} className='text-white search-btn flex align-center justify-center' >
-                <i className='fa-solid fa-magnifying-glass'></i>
-              </Link>
-              </div>
-            </form>
-          </div> */}
-
           <div className='navbar-search bg-white'>
             <form>
               <div className='flex align-center'>
@@ -121,14 +86,14 @@ const Navbar = () => {
             </form>
           </div>
 
-
           <ul className='navbar-nav flex align-center fs-12 fw-4 font-manrope'>
+            <li className='nav-item'>
+              <Link to="/ProductPage" className='nav-link'>Products</Link>
+            </li>
             {
-              categories.slice(0, 11)
-              // .sort(() => Math.random() - 0.5)
-              .map((category, idx) => (
-                <li className='nav-item no-wrap' key = {idx}>
-                  <Link to = {`category/${category}`} className='nav-link text-capitalize'>{category.replace("-", " ")}</Link>
+              categories.slice(0, 11).map((category, idx) => (
+                <li className='nav-item no-wrap' key={idx}>
+                  <Link to={`category/${category}`} className='nav-link text-capitalize'>{category.replace("-", " ")}</Link>
                 </li>
               ))
             }
@@ -136,13 +101,12 @@ const Navbar = () => {
         </div>
 
         <div className='navbar-cart flex align-center'>
-          <Link to = "/cart" className='cart-btn'>
+          <Link to="/cart" className='cart-btn'>
             <i className='fa-solid fa-cart-shopping'></i>
             <div className='cart-items-value'>{itemsCount}</div>
-            <CartModal carts = {carts} />
+            <CartModal carts={carts} />
           </Link>
         </div>
-
 
         {isUserLoggedIn && (
           <div className='navbar-cart flex align-center'>
@@ -152,23 +116,20 @@ const Navbar = () => {
           </div>
         )}
 
-
         {!isUserLoggedIn && (
           <div className='navbar-cart flex align-center'>
-            <a href='#'onClick={handleLogout}> <i class="fa-solid fa-right-from-bracket"></i> </a>
+            <a href='#' onClick={handleLogout}> <i class="fa-solid fa-right-from-bracket"></i> </a>
           </div>
         )}
 
-          <div className='navbar-cart flex align-center'>
-            <Link to="/wishlist" className='cart-btn'>
+        <div className='navbar-cart flex align-center'>
+          <Link to="/wishlist" className='cart-btn'>
             <i class="fa-solid fa-hand-holding-heart"></i>
-            </Link>
-          </div>
-
-
+          </Link>
+        </div>
       </div>
     </nav>
   )
 }
 
-export default Navbar
+export default Navbar;

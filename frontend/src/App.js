@@ -7,21 +7,19 @@ import {
   ProductSingle,
   Cart,
   Search,
-  UserLoginRegister,
   UserComponent,
   Wishlist,
 } from "./pages/index";
+import ProductPage from "./pages/Products/ProductPage";
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Footer from "./components/Footer/Footer";
-import mystore from "./store/mystore";
 import store from "./store/store";
 import { Provider } from "react-redux";
 
 function App() {
   return (
     <div className="App">
-    <Provider store={mystore}>
       <Provider store={store}>
         <BrowserRouter>
           <Header />
@@ -32,15 +30,15 @@ function App() {
             <Route path="/product/:id" element={<ProductSingle />} />
             <Route path="/category/:category" element={<CategoryProduct />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/user" element={<UserLoginRegister />} />
             <Route path="/userx" element={<UserComponent />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/search/:searchTerm" element={<Search />} />
+            <Route path="/ProductPage" element={<ProductPage />} />
+
           </Routes>
 
           <Footer />
         </BrowserRouter>
-      </Provider>
       </Provider>
     </div>
   );

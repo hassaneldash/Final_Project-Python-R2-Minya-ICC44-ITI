@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
-import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -35,6 +34,12 @@ const LoginComponent = () => {
   const [showForm, setShowForm] = useState(false);
   const [type, setType] = useState("signIn");
 
+  let findAccounts = (email, password) => {
+    return locally.find(
+      (item) => item.email === email && item.password === password
+    );
+  };
+
   const { handleSubmit, values, errors, handleBlur, touched, handleChange } =
     useFormik({
       initialValues: {
@@ -42,10 +47,30 @@ const LoginComponent = () => {
         password: "",
       },
       validationSchema: LoginSchema,
+      // onSubmit: async (values) => {
+      //   if (!isLoggedin) {
+      //     let foundUser = findAccounts(values.email, values.password);
+      //     if (foundUser) {
+      //       let sessionLogin = JSON.parse(
+      //         sessionStorage.getItem("login") || "[]"
+      //         );
+      //         sessionLogin.push(foundUser);
+      //         sessionStorage.setItem("login", JSON.stringify(sessionLogin));
+      //         setIsError(false);
+      //         navigate("/");
+      //       } else {
+      //         setIsError(true);
+      //       }
+      //     } else {navigate("/");}
 
-      onSubmit: (values) => {
-        if (findAccount(values.email, values.password)) {
-          sessionStorage.setItem("login", JSON.stringify(values));
+      onSubmit: async(values) => {
+        let user = findAccounts(values.email, values.password);
+        if (user) {
+          let sessionLogin = JSON.parse(
+            sessionStorage.getItem("login") || "[]"
+          );
+          sessionLogin.push(user);
+          sessionStorage.setItem("login", JSON.stringify(sessionLogin));
           setIsError(false);
           navigate("/");
         } else {
@@ -70,24 +95,13 @@ const LoginComponent = () => {
         setShowForm(true);
       }
     };
-
     showUserPanel();
   }, []);
-
-  let findAccount = (email, password) => {
-    let found = locally.find(
-      (item) => item.email === email && item.password === password
-    );
-    return found ? true : false;
-  };
 
   return (
     <div className="form-containerx sign-in-containerx">
       <Form className="form" onSubmit={handleSubmit}>
         <h1>Login</h1>
-        {isError && (
-          <Alert variant="danger">Incorrect email or password</Alert>
-        )}
         <div className="social-containerx">
           <a href="#" className="icon a">
             <i id="id-btn-login-phone" className="fa-solid fa-phone"></i>
@@ -104,24 +118,30 @@ const LoginComponent = () => {
           placeholder="Please, enter your email"
           onBlur={handleBlur}
           onChange={handleChange}
-        />
+          />
         {errors.email && touched.email && (
           <p className="error">{errors.email}</p>
-        )}
+          )}
         <Form.Control
           value={values.password}
           id="password"
           onBlur={handleBlur}
           placeholder="Please, enter your password"
           onChange={handleChange}
-        />
+          />
         {errors.password && touched.password && (
           <p className="error">{errors.password}</p>
-        )}
+          )}
         <a className="a" href="#">
           Forgot your password?
         </a>
-        <Button className="my-3" variant="primary" type="submit">
+        {isError && (
+          <p className="error">Incorrect email or password</p>
+          )}
+      {/* {isError && (
+        <Alert variant="danger">Incorrect email or password</Alert>
+      )} */}
+        <Button className="button my-3" variant="primary" type="submit">
           Login
         </Button>
       </Form>

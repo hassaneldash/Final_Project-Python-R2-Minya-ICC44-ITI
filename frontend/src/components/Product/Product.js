@@ -26,6 +26,31 @@ const Product = ({product}) => {
   };
   
 
+  
+
+    /**Function rating added ramy with abdelrahman */
+        /** Add function rate ------------- abdelrahman & ramy ------------------- */
+
+        function renderStars(rating) {
+          const maxStars = 5;
+          const roundedRating = Math.round(rating * 2) / 2; // Round to nearest half star
+        
+          const stars = [];
+        
+          for (let i = 1; i <= maxStars; i++) {
+            if (i <= roundedRating) {
+              stars.push(<span key={i}>&#9733;</span>); // Unicode star character
+            } else {
+              stars.push(<span key={i}>&#9734;</span>); // Unicode empty star character
+            }
+          }
+        
+          return stars;
+        }
+
+
+
+
   return (
     <Link to = {`/product/${product?.id}`} key = {product?.id}>
       <div className='product-item bg-white'>
@@ -52,14 +77,27 @@ const Product = ({product}) => {
         <div className='product-item-img img-fluid'>
           <img className='img-cover img-fluid' src = {product?.images[0]} alt = {product.title} />
         </div>
+
         <div className='product-item-info fs-14'>
-          <div className='brand' style={{height : '40px'}} >
-            <span>Brand: </span>
-            <span className='fw-7'>{product?.brand}</span>
+
+          <div className='brand' style={{height : '40px', fontWeight: 'bold'}} >
+            {/* <span>Brand: </span> */}
+            <span className='fw-8'>{product?.brand}</span>
           </div>
-          <div className='title py-2' style={{height : '60px'}}>
+
+          <div className='title py-2' style={{height : '55px'}}>
             {product?.title}
           </div>
+
+
+          {/* --------------------- abdelrahman & ramy ---------------------- */}
+              <div className='your-store-rating' style={{  justifyContent: 'center' }}>
+                      <span className='text-orange fw-5' style={{color: 'black'}}></span>
+                      {renderStars(product?.rating)}
+              </div>
+              
+
+        
           <div className='price flex align-center justify-center'>
             <span className='old-price'>
               {formatPrice(product?.price)}
@@ -68,7 +106,7 @@ const Product = ({product}) => {
               {formatPrice(product?.discountedPrice)}
             </span>
             <span className='discount fw-6'>
-              ({product?.discountedPercentage}% Off)
+              ({product?.discountPercentage}%)
             </span>
           </div>
         </div>

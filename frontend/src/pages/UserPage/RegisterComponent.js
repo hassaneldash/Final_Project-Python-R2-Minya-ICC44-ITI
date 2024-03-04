@@ -34,21 +34,30 @@ const passwordRegex =
 function RegisterComponent() {
   let accounts = JSON.parse(localStorage.getItem("Account Storage") || "[]");
   const [isSucess, setIsSucess] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const { values, errors, handleChange, handleSubmit, touched, handleBlur } =
     useFormik({
       initialValues: {
+        id: "",
         email: "",
         name: "",
         password: "",
+        role: "",
       },
       validationSchema: ValidSchema,
 
       onSubmit: (values, { resetForm }) => {
+        if(!values.email || !values.name || !values.password || !values.role){
+          setIsError(true);
+          return;
+        }
         if (isValidEmail(values.email)) {
-          accounts.push(values);
+          const user = {...values, id:Date.now}
+          accounts.push(user);
           localStorage.setItem("Account Storage", JSON.stringify(accounts));
           resetForm();
+          // setIsSucess(true)
         } else {
           setIsSucess(true);
         }
@@ -119,11 +128,33 @@ function RegisterComponent() {
           {errors.password && touched.password && (
             <p className="error">{errors.password}</p>
           )}
+          <select
+            className="input"
+            name="role"
+            value={values.role}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            class={errors.role && touched.role ? "input-error" : ""}
+          >
+          <option value="">Select Role</option>
+          {/* <option value="admin">Admin</option> */}
+          <option value="buyer">Seller</option>
+          <option value="customer">Customer</option>
+          </select>
+          {errors.role && touched.role && (
+            <p className="error">{errors.role}</p>
+          )}
+          {isSucess && (
+            <p className="error">Account Already Registered.</p>
+          )}
+          {isError && (
+            <p className="error">Please, fill all data.</p>
+          )}
           <button type="submit" className="button">
             Register
           </button>
 
-          {isSucess && (
+          {/* {isSucess && (
             <>
               <div class="fluid pt-3">
                 <div className="fluid">
@@ -132,13 +163,14 @@ function RegisterComponent() {
                     style={{ width: "200px", height: "100px" }}
                     className="fluid"
                   >
-                    <Alert.Heading>Whoa not so fast</Alert.Heading>
+                    <Alert.Heading>Not so fast!</Alert.Heading>
                     <p>Account Already Registered</p>
                   </Alert>
                 </div>
               </div>
             </>
-          )}
+          )} */}
+
         </form>
       </div>
     </>
