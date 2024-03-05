@@ -1,31 +1,55 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Navv from './components/Nav';
-import Register from './pages/Registration';
-import Login from './pages/Login';
-import ProductList from './pages/Home';
-// import Show from './pages/Show';
-import NotFound from './pages/NotFound';
-import FavPage from './pages/FavPage';
+import "./App.css";
+// react router v6
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  Home,
+  CategoryProduct,
+  ProductSingle,
+  Cart,
+  Search,
+  UserComponent,
+  Wishlist,
+} from "./pages/index";
+import ProductPage from "./pages/Products/ProductPage";
+import Header from "./components/Header/Header";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Footer from "./components/Footer/Footer";
+import store from "./store/store";
+import { Provider } from "react-redux";
+import SuccessPage from './pages/CartPage/SuccessPage';
+import CancelPage from './pages/CartPage/CancelPage';
+import CheckoutPage from './pages/CartPage/CheckoutPage';
 
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Navv/>
-        <Switch>
-            <Route exact path="/" component={ProductList} />
-            <Route exact path="/home" component={ProductList} />
-            <Route exact path="/favorites" component={FavPage} />
-            {/* <Route exact path="/product/:id" component={Show} /> */}
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Register} />
-            <Route exact path={"*"} component={NotFound} />
-        </Switch>
-      </div>
-    </Router>
+    <div className="App">
+      <Provider store={store}>
+        <BrowserRouter>
+          <Header />
+          <Sidebar />
+
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/product/:id" element={<ProductSingle />} />
+            <Route path="/category/:category" element={<CategoryProduct />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route exact path="/success" component={SuccessPage} />
+            <Route exact path="/cancel" component={CancelPage} />
+            <Route path="/userx" element={<UserComponent />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/search/:searchTerm" element={<Search />} />
+            <Route path="/ProductPage" element={<ProductPage />} />
+            <Route path="/CheckoutPage" element={<CheckoutPage />} />
+
+
+          </Routes>
+
+          <Footer />
+        </BrowserRouter>
+      </Provider>
+    </div>
   );
 }
+
 export default App;
