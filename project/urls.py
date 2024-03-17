@@ -16,8 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from products.views import  ProductViewSet, fetch_products_with_limit
 
+# Create a router and register the ProductViewSet
+router = DefaultRouter()
+router.register(r'products', ProductViewSet, basename='product')
+
+# Define urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', include('users.urls')),
+    path('user/', include('users.urls')),  # Assuming 'users.urls' is the URLconf for user-related views
+
+    # Register the product routes from the router
+    path('', include(router.urls)),
+    path('products/<int:pk>/', ProductViewSet.as_view({'get': 'retrieve'}), name='product-detail'),
+    path('products/categories/', ProductViewSet.as_view({'get': 'categories'}), name='product-categories'), 
+   
+    path('products/category/<str:category>/', ProductViewSet.as_view({'get': 'category_products'}), name='category-products'),
+    path('products/search/', ProductViewSet.as_view({'get': 'search'}), name='product-search'),
+    path('products/limited/', fetch_products_with_limit, name='fetch-products-with-limit'),
+
 ]
