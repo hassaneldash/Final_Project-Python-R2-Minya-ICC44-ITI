@@ -95,7 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'easytrade',
         'USER': 'postgres',
-        'PASSWORD': 'Manar123arabi',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
