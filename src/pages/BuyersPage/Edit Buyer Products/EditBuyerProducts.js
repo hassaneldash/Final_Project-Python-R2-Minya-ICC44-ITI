@@ -30,21 +30,13 @@ function EditBuyerProducts() {
       errors.category = "Category is required";
     }
 
-    if (!data.sellerid || isNaN(data.sellerid)) {
-      errors.sellerid = "Seller ID must be a valid number";
-    }
+  
 
     if (!data.inventory || data.inventory.trim() === "") {
       errors.inventory = "Inventory is required";
     }
 
-    if (!data.productid || isNaN(data.productid)) {
-      errors.productid = "Product ID must be a valid number";
-    }
-
-    if (!data.customerid || isNaN(data.customerid)) {
-      errors.customerid = "Customer ID must be a valid number";
-    }
+  
 
     return errors;
   };
@@ -54,7 +46,7 @@ function EditBuyerProducts() {
 
     if (Object.keys(validationErrors).length === 0) {
       axios
-        .put(`https://api-generator.retool.com/Vn5ZGU/data/${id}`, formData)
+        .put(`https://api-generator.retool.com/u9XTxw/data/${id}`, formData)
         .then((response) => {
           setProduct(response.data);
           navigate("/HomePanelBuyers");
@@ -74,7 +66,7 @@ function EditBuyerProducts() {
     const getProduct = async () => {
       try {
         const response = await axios.get(
-          `https://api-generator.retool.com/Vn5ZGU/data/${id}`
+          `https://api-generator.retool.com/u9XTxw/data/${id}`
         );
         setProduct(response.data);
         setFormData(response.data); // Set formData to populate input fields
@@ -93,7 +85,7 @@ function EditBuyerProducts() {
 
   const displayError = (field) => {
     return errors[field] ? (
-      <div className="error-message">{errors[field]}</div>
+      <div className="error-message" >{errors[field]}</div>
     ) : null;
   };
 
@@ -106,11 +98,7 @@ function EditBuyerProducts() {
         />
 
         <form className="formclss">
-          <label>
-            ID:
-            <input type="text" name="id" value={product.id} readOnly />
-          </label>
-          <br />
+       
           <label>
             Name:
             <input
@@ -151,32 +139,8 @@ function EditBuyerProducts() {
             {displayError("price")}
           </label>
           <br />
-          <label>
-            Category:
-            <input
-              type="text"
-              name="category"
-              placeholder={product.category}
-              onChange={(e) =>
-                setFormData({ ...formData, category: e.target.value })
-              }
-            />
-            {displayError("category")}
-          </label>
-          <br />
-          <label>
-            Seller ID:
-            <input
-              type="number"
-              name="sellerid"
-              placeholder={product.sellerid}
-              onChange={(e) =>
-                setFormData({ ...formData, sellerid: e.target.value })
-              }
-            />
-            {displayError("sellerid")}
-          </label>
-          <br />
+        
+       
           <label>
             Inventory:
             <input
@@ -189,32 +153,7 @@ function EditBuyerProducts() {
             />
             {displayError("inventory")}
           </label>
-          <br />
-          <label>
-            Product ID:
-            <input
-              type="number"
-              name="productid"
-              placeholder={product.productid}
-              onChange={(e) =>
-                setFormData({ ...formData, productid: e.target.value })
-              }
-            />
-            {displayError("productid")}
-          </label>
-          <br />
-          <label>
-            Customer ID:
-            <input
-              type="number"
-              name="customerid"
-              placeholder={product.customerid}
-              onChange={(e) =>
-                setFormData({ ...formData, customerid: e.target.value })
-              }
-            />
-            {displayError("customerid")}
-          </label>
+         
           <br />
           <button
             type="button"

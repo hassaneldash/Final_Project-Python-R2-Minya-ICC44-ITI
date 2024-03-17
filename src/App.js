@@ -45,7 +45,7 @@ function App() {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/search/:searchTerm" element={<Search />} />
             <Route path="/ProductPage" element={<ProductPage />} />
-
+            
             <Route path="/HomePanelBuyers" element={<HomePanelBuyers />} />
             <Route path="/ShowBuyerProducts" element={<ShowBuyerProducts />} />
             <Route path="/AddBuyerProduct" element={<AddBuyerProduct />} />
