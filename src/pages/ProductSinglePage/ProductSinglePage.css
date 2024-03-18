@@ -1,0 +1,242 @@
+.product-single .product-single-content {
+row-gap: 2rem;
+padding: 12px;
+}
+@media screen and (min-width: 768px) {
+.product-single .product-single-content {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 4rem;
+}
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-zoom {
+height: 380px;
+overflow: hidden;
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-thumbs {
+overflow-x: scroll;
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-thumbs::-webkit-scrollbar {
+height: 5px;
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-thumbs::-webkit-scrollbar-track {
+box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+border-radius: 10px;
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-thumbs::-webkit-scrollbar-thumb {
+border-radius: 10px;
+background-color: #ff774d;
+outline: 1px solid #a16bed;
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-thumbs .thumb-item {
+margin: 0 5px;
+height: 120px;
+border: 2px solid #fff;
+transition: all 300ms ease-in-out;
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-thumbs .thumb-item img {
+transition: all 300ms ease-in-out;
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-thumbs .thumb-item:first-child {
+margin-left: 0;
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-thumbs .thumb-item:last-child {
+margin-right: 0;
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-thumbs .thumb-item:hover {
+border-color: #1d2b3c;
+}
+.product-single .product-single-content .product-single-l .product-img .product-img-thumbs .thumb-item:hover img {
+transform: scale(0.9);
+}
+.product-single .product-single-content .product-single-r {
+margin-top: 2rem;
+}
+.product-single .product-single-content .product-single-r .product-details .title {
+padding-bottom: 0.6rem;
+border-bottom: 1px solid #f2f2f2;
+}
+.product-single .product-single-content .product-single-r .product-details .para {
+margin: 1rem 0;
+opacity: 0.9;
+}
+.product-single .product-single-content .product-single-r .product-details .info {
+margin-bottom: 1.6rem;
+}
+.product-single .product-single-content .product-single-r .product-details .price {
+background-color: rgba(0, 0, 0, 0.02);
+padding: 2rem;
+}
+.product-single .product-single-content .product-single-r .product-details .price .old-price {
+text-decoration: line-through;
+}
+.product-single .product-single-content .product-single-r .product-details .price .discount {
+padding: 0 0.8rem;
+border-radius: 3px;
+margin-left: 8px;
+margin-top: 2px;
+}
+.product-single .product-single-content .product-single-r .product-details .qty .qty-change .qty-decrease, .product-single .product-single-content .product-single-r .product-details .qty .qty-change .qty-increase {
+width: 28px;
+height: 28px;
+border: 1px solid rgba(0, 0, 0, 0.1);
+font-size: 13px;
+}
+.product-single .product-single-content .product-single-r .product-details .qty .qty-change .qty-value {
+width: 45px;
+height: 28px;
+border-top: 1px solid rgba(0, 0, 0, 0.1);
+border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.product-single .product-single-content .product-single-r .product-details .qty .qty-error {
+padding: 2px 6px;
+border-radius: 3px;
+}
+.product-single .product-single-content .product-single-r .product-details .btns .btn {
+height: 46px;
+font-size: 15px;
+border: 1px solid #1d2b3c;
+padding: 0 1.8rem;
+transition: all 300ms ease-in-out;
+}
+.product-single .product-single-content .product-single-r .product-details .btns .btn-text {
+text-transform: capitalize;
+}
+.product-single .product-single-content .product-single-r .product-details .btns .btn:first-child {
+background-color: #ffeee8;
+color: #1d2b3c;
+}
+.product-single .product-single-content .product-single-r .product-details .btns .btn:last-child {
+background-color: #1d2b3c;
+color: white;
+}
+.product-single .product-single-content .product-single-r .product-details .btns .btn:hover {
+opacity: 0.9;
+}
+
+
+
+
+
+/* addation style abdelrahman */
+
+
+.your-store-add-to-cart-btn {
+background-color: #FF9900; /* Your preferred background color */
+color: #ffffff; /* Your preferred text color */
+border: 1px solid #FF9900; /* Border color same as background */
+padding: 10px 15px; /* Adjust padding as needed */
+cursor: pointer;
+font-size: 16px; /* Adjust font size as needed */
+border-radius: 3px; /* Optional: Add rounded corners */
+}
+
+.your-store-add-to-cart-btn:hover {
+background-color: #FFD700; /* Change color on hover */
+}
+
+.your-store-add-to-cart-text {
+display: inline-block;
+margin: 0;
+}
+
+.your-store-buy-now-btn {
+background-color: navy; /* Your preferred background color */
+color: #ffffff; /* Your preferred text color */
+border: 1px solid navy; /* Border color same as background */
+padding: 10px 15px; /* Adjust padding as needed */
+cursor: pointer;
+font-size: 16px; /* Adjust font size as needed */
+border-radius: 3px; /* Optional: Add rounded corners */
+}
+
+.your-store-buy-now-btn:hover {
+background-color: blue; /* Change color on hover */
+}
+
+.your-store-buy-now-text {
+display: inline-block;
+margin: 0;
+}
+
+
+/* rating and another */
+
+.your-store-product-info {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+font-size: 14px;
+}
+
+.your-store-rating,
+.your-store-brand,
+.your-store-category {
+display: flex;
+align-items: center;
+margin-right: 10px;
+}
+
+.your-store-vert-line {
+height: 12px; /* Adjust height as needed */
+width: 1px;
+background-color: #ddd; /* Vertical line color */
+margin: 0 10px;
+}
+    
+
+
+.your-store-product-info {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+font-size: 14px;
+}
+
+.your-store-rating {
+display: flex;
+align-items: center;
+margin-right: 10px;
+}
+
+.your-store-rating span {
+font-size: 18px; /* Adjust the size of the stars */
+color: #FFD700; /* Gold color for filled stars */
+}
+
+.your-store-vert-line {
+height: 12px; /* Adjust height as needed */
+width: 1px;
+background-color: #ddd; /* Vertical line color */
+margin: 0 10px;
+}
+
+.text-orange {
+color: #FFA500; /* Your preferred orange color */
+}
+
+.text-capitalize {
+text-transform: capitalize;
+}
+    
+
+/* title and description */
+
+.your-store-title {
+font-size: 24px; /* Adjust the title font size */
+font-weight: 600; /* Bold */
+margin-bottom: 10px; /* Adjust margin as needed */
+color: #333; /* Text color */
+}
+
+.your-store-para {
+font-size: 16px; /* Adjust the description font size */
+font-weight: 400; /* Regular */
+line-height: 1.5; /* Adjust line height as needed */
+color: #555; /* Text color */
+}
+
+.font-manrope {
+/* Add any specific font-family styles if using the Manrope font */
+font-family: 'Manrope', sans-serif;
+}
+    

@@ -3,9 +3,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities'; */
 
-*,
-*::after,
-*::before {
+
+*, *::after, *::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -17,7 +16,7 @@ html {
 body {
   font-size: 1.6rem;
   line-height: 1.6;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #000;
 }
 ul {
@@ -27,12 +26,7 @@ a {
   text-decoration: none;
   color: unset;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   text-transform: capitalize;
 }
 img {
@@ -52,9 +46,7 @@ button {
   font-family: inherit;
   font-size: 1.8rem;
 }
-input,
-textarea,
-select {
+input, textarea, select {
   outline: 0;
   border: none;
   resize: none;
@@ -188,10 +180,10 @@ select {
   background-color: #929292;
 }
 .font-poppins {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 .font-manrope {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 /* font weights */
 .fw-1 {
@@ -433,9 +425,7 @@ select {
   height: 100%;
   background-color: #1d2b3c;
 }
-*,
-*::after,
-*::before {
+*, *::after, *::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -447,7 +437,7 @@ html {
 body {
   font-size: 1.6rem;
   line-height: 1.6;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #000;
 }
 ul {
@@ -457,12 +447,7 @@ a {
   text-decoration: none;
   color: unset;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   text-transform: capitalize;
 }
 img {
@@ -482,9 +467,7 @@ button {
   font-family: inherit;
   font-size: 1.8rem;
 }
-input,
-textarea,
-select {
+input, textarea, select {
   outline: 0;
   border: none;
   resize: none;
@@ -618,10 +601,10 @@ select {
   background-color: #929292;
 }
 .font-poppins {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 .font-manrope {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 /* font weights */
 .fw-1 {
@@ -863,6 +846,7 @@ select {
   height: 100%;
   background-color: #1d2b3c;
 }
+
 
 .star-icon {
   width: 24px !important;
@@ -877,13 +861,8 @@ select {
 }
 
 .badge {
-  position: absolute;
-  margin: 2%;
-  transition: transform 0.3s ease;
-  top: 1%;
-  right: 1%;
-}
-
-.badge:hover {
-  transform: scale(1.1); /* Example scale factor */
+  position: absolute !important;
+  top: 1% !important;
+  right: 1% !important;
+  font-size: 8% !important;
 }

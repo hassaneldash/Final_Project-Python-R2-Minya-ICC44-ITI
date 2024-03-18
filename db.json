@@ -1,0 +1,29 @@
+{
+    "products": [
+      {
+      "id": "1",
+      "name": "Smartphone",
+      "brand": "Latest smartphone with cutting-edge technology",
+      "price": 799.99,
+      "stock": 75 
+      
+    },
+    {
+        "id": "2",
+        "name": "laptob",
+        "brand": "Latest laptob with cutting-edge technology",
+        "price": 2590.99,
+        "stock": 26
+    },
+    {
+      "id": "3",
+      "name": "table",
+      "brand": "Latest smartphone with cutting-edge technology",
+      "price": 799.99,
+      "stock": 75 
+      
+    }
+
+
+    ]
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./UserComponent.css";
+import "./stylex.css";
 import { Link, useNavigate } from "react-router-dom";
 import RegisterComponent from "./RegisterComponent";
 import LoginComponent from "./LoginComponent";
@@ -7,7 +7,7 @@ import LoginComponent from "./LoginComponent";
 const UserComponent = () => {
   const [type, setType] = useState("signIn");
   const navigate = useNavigate();
-  const handleOnClick = (text) => {
+  const handleOnClick = text => {
     if (text !== type) {
       setType(text);
       return;
@@ -16,6 +16,12 @@ const UserComponent = () => {
   useEffect(() => {
     if (sessionStorage.getItem("login") != null) {
       navigate("/");
+    }else{
+      if (localStorage.getItem("Account Storage") != null) {
+        setType("signIn");
+      }else{
+        setType("signUp");
+      }
     }
   }, [navigate]);
   const containerxClass =
@@ -30,7 +36,7 @@ const UserComponent = () => {
             <div className="overlay-panel overlay-left">
               <h1>Welcome Back!</h1>
               <p>
-                To keep connected with us, please login with your personal info
+              To keep connected with us, please login with your personal info
               </p>
               <button
                 className="ghost button"
@@ -56,6 +62,6 @@ const UserComponent = () => {
       </div>
     </div>
   );
-};
+}
 
 export default UserComponent;

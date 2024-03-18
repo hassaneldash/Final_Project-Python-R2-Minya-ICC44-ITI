@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import axios from "axios";
 
 const loginPat = /^[a-zA-Z0-9._]+@[a-z]{1,8}\.(com|eg|gov|edu)$/;
 const passwordRegex =
@@ -28,7 +28,12 @@ const LoginSchema = yup.object().shape({
 
 const LoginComponent = () => {
   const navigate = useNavigate();
+  let locally = JSON.parse(localStorage.getItem("Account Storage") || "[]");
+  let sessionLogin = JSON.parse(sessionStorage.getItem("login") || "[]");
   const [isError, setIsError] = useState(false);
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [type, setType] = useState("signIn");
 
   const { handleSubmit, values, errors, handleBlur, touched, handleChange } =
     useFormik({
@@ -37,42 +42,43 @@ const LoginComponent = () => {
         password: "",
       },
       validationSchema: LoginSchema,
-      onSubmit: async (values) => {
-        try {
-          const response = await axios.get(
-            `http://127.0.0.1:8000/user/?email=${values.email}&password=${values.password}`
-          );
-          if (response.data.length > 0) {
-            const user = response.data[0];
-            sessionStorage.setItem(
-              "login",
-              JSON.stringify({ name: user.name, email: user.email })
-            );
-            setIsError(false);
-            redirectBasedOnRole(user.role);
-          } else {
-            setIsError(true);
-          }
-        } catch (error) {
-          console.error("Error logging in:", error);
+
+      onSubmit: (values) => {
+        if (findAccount(values.email, values.password)) {
+          sessionStorage.setItem("login", JSON.stringify(values));
+          setIsError(false);
+          navigate("/");
+        } else {
           setIsError(true);
         }
       },
     });
 
   useEffect(() => {
-    if (sessionStorage.getItem("login") !== null) {
-      const user = JSON.parse(sessionStorage.getItem("login"));
-      redirectBasedOnRole(user.role);
+    if (sessionStorage.getItem("login") != null) {
+      navigate("/");
     }
+  }, [navigate]);
+
+  useEffect(() => {
+    let showUserPanel = () => {
+      if (sessionLogin.length > 0) {
+        setIsLoggedin(true);
+        setShowForm(false);
+      } else {
+        setIsLoggedin(false);
+        setShowForm(true);
+      }
+    };
+
+    showUserPanel();
   }, []);
 
-  const redirectBasedOnRole = (role) => {
-    if (role === "customer") {
-      navigate("/");
-    } else if (role === "seller") {
-      navigate("/dashboard");
-    }
+  let findAccount = (email, password) => {
+    let found = locally.find(
+      (item) => item.email === email && item.password === password
+    );
+    return found ? true : false;
   };
 
   return (
@@ -95,26 +101,30 @@ const LoginComponent = () => {
           placeholder="Please, enter your email"
           onBlur={handleBlur}
           onChange={handleChange}
-        />
+          />
         {errors.email && touched.email && (
           <p className="error">{errors.email}</p>
-        )}
+          )}
         <Form.Control
           value={values.password}
           id="password"
-          type="password"
           onBlur={handleBlur}
           placeholder="Please, enter your password"
           onChange={handleChange}
-        />
+          />
         {errors.password && touched.password && (
           <p className="error">{errors.password}</p>
-        )}
+          )}
         <a className="a" href="#">
           Forgot your password?
         </a>
-        {isError && <p className="error">Incorrect email or password</p>}
-        <Button className="button my-3" variant="primary" type="submit">
+        {isError && (
+          <p className="error">Incorrect email or password</p>
+          )}
+      {/* {isError && (
+        <Alert variant="danger">Incorrect email or password</Alert>
+      )} */}
+        <Button className="my-3" variant="primary" type="submit">
           Login
         </Button>
       </Form>

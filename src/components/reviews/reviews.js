@@ -1,22 +1,38 @@
-import "./reviews.css";
+import Form from "react-bootstrap/Form";
+import BtnsCo from "./Btns";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Pagination from "../../components/Pagination/Pagination";
-import Popup from "../../components/Popup/PopupEdit";
-
+import React from "react";
 export default function Rev(props) {
   const [reviews, setReviews] = useState([]);
+  const [revs, setRevs] = useState("");
   const [sessionLogin, setSessionLogin] = useState([]);
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [editedReviewText, setEditedReviewText] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [reviewsPerPage] = useState(3);
-  const [showPopup, setShowPopup] = useState(false);
-  const [reviewToEdit, setReviewToEdit] = useState(null);
+
+  const onChangeH = (e) => {
+    setRevs(e.target.value);
+  };
+
+  const createRev = async () => {
+    try {
+      await axios.post("https://retoolapi.dev/4XjVdq/data", {
+        rate: 5,
+        fName: sessionLogin[0].fullname,
+        reviews: revs,
+        fullname: sessionLogin[0].fullname,
+      });
+
+      loadData();
+      console.log("Post successful");
+    } catch (error) {
+      console.error("Error posting review:", error);
+    }
+  };
 
   const loadData = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/review/");
+      const res = await axios.get("https://retoolapi.dev/4XjVdq/data");
       setReviews(res.data);
     } catch (error) {
       console.error("Error loading data:", error);
@@ -24,35 +40,18 @@ export default function Rev(props) {
   };
 
   useEffect(() => {
-    loadData();
-  }, []);
-
-  useEffect(() => {
     let sessionLogin = JSON.parse(sessionStorage.getItem("login") || "[]");
     setSessionLogin(sessionLogin);
     console.log(sessionLogin);
   }, []);
 
-  function renderStars(rating) {
-    const maxStars = 5;
-    const roundedRating = Math.round(rating * 2) / 2;
-
-    const stars = [];
-
-    for (let i = 1; i <= maxStars; i++) {
-      if (i <= roundedRating) {
-        stars.push(<span key={i}>&#9733;</span>);
-      } else {
-        stars.push(<span key={i}>&#9734;</span>);
-      }
-    }
-
-    return stars;
-  }
+  useEffect(() => {
+    loadData();
+  }, [sessionLogin]);
 
   const deleteRev = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/review/${id}/`);
+      await axios.delete(`https://retoolapi.dev/4XjVdq/data/${id}`);
 
       loadData();
       console.log("Delete successful");
@@ -63,8 +62,8 @@ export default function Rev(props) {
 
   const editRev = async (id) => {
     try {
-      await axios.patch(`http://127.0.0.1:8000/review/${id}/`, {
-        reviews: editedReviewText,
+      await axios.patch(`https://retoolapi.dev/4XjVdq/data/${id}`, {
+        Reviews: editedReviewText,
       });
 
       loadData();
@@ -76,93 +75,96 @@ export default function Rev(props) {
     }
   };
 
-  const handleClosePopup = () => {
-    setShowPopup(false);
-  };
-
-  const handleEdit = (review) => {
-    setReviewToEdit(review);
-    setShowPopup(true);
-  };
-
-  const indexOfLastReview = currentPage * reviewsPerPage;
-  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-  const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
   return (
-    <div className="rev-card-container">
-      <div className="your-store-title fs-20 fw-5">
-        Product Ratings & Reviews
-      </div>
-      {currentReviews.map((rev) => (
-        <div className="rev-item" key={rev.id}>
+    <>
+      {reviews.map((rev) => (
+        <div
+          className="d-flex gap-2 pt-3 align-items-end border-bottom"
+          key={rev.id}
+        >
           <div className="d-flex gap-1">
-            <div className="reviews">
-              <p className="m-0 your-store-rating">
-                {rev.name} {renderStars(rev.rate)}
-              </p>
+            <div>
+              <p className="m-0">{rev.fullname}</p>
               {editingReviewId === rev.id ? (
-                <input
+                <Form.Control
                   value={editedReviewText}
                   onChange={(e) => setEditedReviewText(e.target.value)}
                   type="text"
-                  className="form-control"
                   placeholder="Edit Review"
                 />
               ) : (
-                <div className="rev-text-container">{rev.reviews}</div>
+                <div>{rev.reviews}</div>
               )}
             </div>
           </div>
-          {sessionStorage.getItem("login") !== null &&
-            sessionLogin.name === rev.name && (
-              <div className="rev-btns-container">
-                <button
-                  onClick={() => deleteRev(rev.id)}
-                  className="delete-review-btn"
-                >
-                  Delete
-                </button>
-              </div>
+
+          <div>
+            <p className="m-0">{rev.rate}</p>
+          </div>
+
+          {sessionLogin &&
+            sessionLogin.length > 0 &&
+            sessionLogin[0].fullname === rev.Fullname && (
+              <BtnsCo
+                btnAct={() => deleteRev(rev.id)}
+                btnType="submit"
+                btnCo="danger"
+                btnText="remove"
+              />
             )}
-          {sessionStorage.getItem("login") !== null &&
-            sessionLogin.name === rev.name && (
+          {sessionLogin &&
+            sessionLogin.length > 0 &&
+            sessionLogin[0].fullname === rev.Fullname && (
               <>
                 {editingReviewId === rev.id ? (
-                  <button
-                    onClick={() => editRev(rev.id)}
-                    className="edit-save-btn"
-                  >
-                    Save
-                  </button>
+                  <BtnsCo
+                    btnAct={() => editRev(rev.id)}
+                    btnType="submit"
+                    btnCo="primary"
+                    btnText="save"
+                  />
                 ) : (
-                  <div className="rev-btns-container">
-                    <button
-                      onClick={() => handleEdit(rev)}
-                      className="edit-review-btn"
-                    >
-                      Edit
-                    </button>
-                  </div>
+                  <BtnsCo
+                    btnAct={() => setEditingReviewId(rev.id)}
+                    btnCo="primary"
+                    btnText="edit"
+                  />
                 )}
               </>
             )}
         </div>
       ))}
-      <Pagination
-        totalPages={Math.ceil(reviews.length / reviewsPerPage)}
-        currentPage={currentPage}
-        handlePageNumClick={paginate}
-      />
-      {showPopup && (
-        <Popup
-          isOpen={showPopup}
-          onClose={handleClosePopup}
-          reviewToEdit={reviewToEdit}
-        />
+
+      {sessionLogin && sessionLogin.length > 0 ? (
+        <div className="d-flex gap-2 pt-3 align-items-end ">
+          <div className="d-flex flex-column gap-1 ">
+            {sessionLogin && sessionLogin.length > 0 && (
+              <p className="m-0">{sessionLogin[0].fullname}</p>
+            )}
+
+            <Form.Control
+              onChange={onChangeH}
+              value={revs}
+              type="text"
+              placeholder="Please Add Review"
+            />
+          </div>
+
+          <div className="d-flex ">
+            <BtnsCo
+              btnAct={createRev}
+              btnType="submit"
+              btnCs={{ backgroundColor: "#008f97" }}
+              btnCo="primary"
+              btnText="Add"
+            />
+
+            {reviews.length > 0 && <p className="m-0">{reviews[0].ratings}</p>}
+          </div>
+        </div>
+      ) : (
+        <p>Please Login To add Review</p>
       )}
-    </div>
+    </>
   );
 }
