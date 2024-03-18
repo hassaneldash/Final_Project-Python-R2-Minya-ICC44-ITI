@@ -46,7 +46,7 @@ const categorySlice = createSlice({
 export const fetchAsyncCategories = createAsyncThunk(
   "categories/fetch",
   async () => {
-    const response = await fetch(`${BASE_URL}products/categories`);
+    const response = await fetch(`${BASE_URL}categories`);
     const data = await response.json();
     return data;
   }
@@ -55,7 +55,7 @@ export const fetchAsyncCategories = createAsyncThunk(
 export const fetchAsyncProductsOfCategory = createAsyncThunk(
   "category-products/fetch",
   async (category) => {
-    const response = await fetch(`${BASE_URL}products/category/${category}`);
+    const response = await fetch(`${BASE_URL}category/${category}`);
     const data = await response.json();
     return data.products;
   }
