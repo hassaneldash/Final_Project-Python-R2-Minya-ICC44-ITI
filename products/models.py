@@ -10,8 +10,10 @@ class Product(models.Model):
     stock = models.IntegerField()
     brand = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
-    thumbnail = models.URLField()
-    images = models.JSONField()  
+    thumbnail = models.ImageField(upload_to='products/thumbnails/')
+    images = models.ImageField(upload_to='products/images/')
 
     def __str__(self):
         return self.title
+
+
