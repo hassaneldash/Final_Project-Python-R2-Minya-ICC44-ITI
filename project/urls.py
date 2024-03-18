@@ -16,9 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.decorators.csrf import csrf_exempt
+from products.views import ProductDetail, ProductList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('users.urls')),
     path('review/', include('reviews.urls')),
+    path('products/', csrf_exempt(ProductList.as_view()), name='product-list'),
+    path('products/<int:pk>/', ProductDetail.as_view(), name='product-detail'),
 ]
