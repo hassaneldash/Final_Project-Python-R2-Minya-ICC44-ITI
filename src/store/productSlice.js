@@ -47,9 +47,9 @@ const productSlice = createSlice({
 export const fetchAsyncProducts = createAsyncThunk(
   "products/fetch",
   async (limit) => {
-    const response = await fetch(`${BASE_URL}products?limit=${limit}`);
+    const response = await fetch(`${BASE_URL}products?limit=${1}`);
     const data = await response.json();
-    return data.products;
+    return data;
   }
 );
 
@@ -57,7 +57,7 @@ export const fetchAsyncProducts = createAsyncThunk(
 export const fetchAsyncProductSingle = createAsyncThunk(
   "product-single/fetch",
   async (id) => {
-    const response = await fetch(`${BASE_URL}products/${id}`);
+    const response = await fetch(`${BASE_URL}products/${id}/`);
     const data = await response.json();
     return data;
   }
@@ -69,3 +69,23 @@ export const getProductSingle = (state) => state.product.productSingle;
 export const getSingleProductStatus = (state) =>
   state.product.productSingleStatus;
 export default productSlice.reducer;
+
+
+// const getProduct = async (productId) => {
+//   try {
+//     const response = await fetch(
+//       `http://127.0.0.1:8000/products/${productId}/`
+//     );
+//     if (!response.ok) {
+//       throw new Error("Network response was not ok.");
+//     }
+//     const productDetails = await response.json();
+//     console.log(productDetails);
+//     // You can now set the product details in your component state or context
+//   } catch (error) {
+//     console.error("There has been a problem with your fetch operation:", error);
+//   }
+// };
+
+// // Call the function with the product ID
+// getProduct(4);

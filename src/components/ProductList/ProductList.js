@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "./ProductList.css";
 import Product from "../Product/Product";
 import Slider from "react-slick";
@@ -12,16 +12,16 @@ const ProductList = ({ products }) => {
     slidesToScroll: 3,
   };
 
-  // Calculate discounted price for each product
-  const productsWithDiscount = products.map(product => ({
+  const productsWithDiscount = products.map((product) => ({
     ...product,
-    discountedPrice: product.price - (product.price * (product.discountPercentage / 100))
+    discountedPrice:
+      product.price - product.price * (product.discountPercentage / 100),
   }));
 
   return (
     <div>
       <Slider {...settings}>
-        {productsWithDiscount.map(product => (
+        {productsWithDiscount.map((product) => (
           <div key={product.id}>
             <Product product={{ ...product }} />
           </div>
