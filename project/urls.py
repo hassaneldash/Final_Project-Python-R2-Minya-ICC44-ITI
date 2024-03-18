@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
 from products.views import ProductDetail, ProductList
+from project import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +27,4 @@ urlpatterns = [
     path('review/', include('reviews.urls')),
     path('products/', csrf_exempt(ProductList.as_view()), name='product-list'),
     path('products/<int:pk>/', ProductDetail.as_view(), name='product-detail'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
