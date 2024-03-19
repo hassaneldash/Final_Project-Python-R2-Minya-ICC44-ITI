@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BASE_URL } from "../utils/apiURL";
 import { STATUS } from "../utils/status";
+import axios from "axios";
 
 const initialState = {
   categories: [],
@@ -43,21 +44,29 @@ const categorySlice = createSlice({
   },
 });
 
+// For getting the list of categories
 export const fetchAsyncCategories = createAsyncThunk(
   "categories/fetch",
-  async () => {
-    const response = await fetch(`${BASE_URL}categories`);
-    const data = await response.json();
-    return data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL}categories/`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
+// For getting the products of a specific category
 export const fetchAsyncProductsOfCategory = createAsyncThunk(
   "category-products/fetch",
-  async (category) => {
-    const response = await fetch(`${BASE_URL}category/${category}`);
-    const data = await response.json();
-    return data.products;
+  async (category, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL}category/${category}/`);
+      return response.data.products;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 

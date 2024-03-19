@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BASE_URL } from "../utils/apiURL";
 import { STATUS } from "../utils/status";
+import axios from "axios";
 
 const initialState = {
   products: [],
@@ -43,23 +44,28 @@ const productSlice = createSlice({
   },
 });
 
-// for getting the products list with limited numbers
 export const fetchAsyncProducts = createAsyncThunk(
   "products/fetch",
-  async (limit) => {
-    const response = await fetch(`${BASE_URL}products?limit=${1}`);
-    const data = await response.json();
-    return data;
+  async (limit, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL}products/?limit=${limit}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
-// getting the single product data also
+// Getting the single product data
 export const fetchAsyncProductSingle = createAsyncThunk(
   "product-single/fetch",
-  async (id) => {
-    const response = await fetch(`${BASE_URL}products/${id}/`);
-    const data = await response.json();
-    return data;
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BASE_URL}products/${id}/`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -70,22 +76,3 @@ export const getSingleProductStatus = (state) =>
   state.product.productSingleStatus;
 export default productSlice.reducer;
 
-
-// const getProduct = async (productId) => {
-//   try {
-//     const response = await fetch(
-//       `http://127.0.0.1:8000/products/${productId}/`
-//     );
-//     if (!response.ok) {
-//       throw new Error("Network response was not ok.");
-//     }
-//     const productDetails = await response.json();
-//     console.log(productDetails);
-//     // You can now set the product details in your component state or context
-//   } catch (error) {
-//     console.error("There has been a problem with your fetch operation:", error);
-//   }
-// };
-
-// // Call the function with the product ID
-// getProduct(4);
