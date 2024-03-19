@@ -2,51 +2,56 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./productStyle.css";
 
+const BASE_URL = "http://127.0.0.1:8000/products/";
+
 function ShowProduct() {
-  const [product, setProduct] = useState({});
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/products/4`)
-      .then((res) => setProduct(res.data))
+      .get(BASE_URL)
+      .then((res) => setProducts(res.data))
       .catch((err) => console.log(err));
   }, []);
 
   return (
-    <>
-      <div className="containerw">
-        <h1 className="text-center text-dark">Product Details</h1>
-        <div className="cards container">
-          {Object.keys(product).length > 0 ? (
-            <>
-              <img src={product.thumbnail} alt={product.title} />
-              <div className="cards-body">
-                <h5 className="cards-title">{product.title}</h5>
-                <h5 className="cards-title">{product.description}</h5>
-                <p className="cards-title">Price: ${product.price}</p>
-                <p className="cards-title">
-                  Discount Percentage: {product.discountPercentage} %
-                </p>
-                <p className="cards-title">Brand: {product.brand}</p>
-                <p className="cards-title">Category: {product.category}</p>
-                <div className="thumbnail-container">
-                  {product.images.map((image, index) => (
+    <div className="container">
+      <h1 className="text-center text-dark">Product Details</h1>
+      {products.length > 0 ? (
+        products.map((product, index) => (
+          <div key={index} className="cards container">
+            <img
+              src={product.thumbnail}
+              alt={product.title}
+              className="product-image"
+            />
+            <div className="cards-body">
+              <h5 className="cards-title">{product.title}</h5>
+              <p className="cards-text">{product.description}</p>
+              <p className="cards-text">Price: ${product.price}</p>
+              <p className="cards-text">
+                Discount Percentage: {product.discountPercentage}%
+              </p>
+              <p className="cards-text">Brand: {product.brand}</p>
+              <p className="cards-text">Category: {product.category}</p>
+              <div className="thumbnail-container">
+                {product.images &&
+                  product.images.map((image, imgIndex) => (
                     <img
-                      key={index}
+                      key={imgIndex}
                       src={image}
-                      alt={`Thumbnail ${index}`}
+                      alt={`Thumbnail ${imgIndex}`}
                       className="thumbnail"
                     />
                   ))}
-                </div>
               </div>
-            </>
-          ) : (
-            <p>isloading</p>
-          )}
-        </div>
-      </div>
-    </>
+            </div>
+          </div>
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
   );
 }
 
