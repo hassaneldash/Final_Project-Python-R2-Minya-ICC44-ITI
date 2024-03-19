@@ -90,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'easytrade',
-        'USER': 'ramymedhat',
-        'PASSWORD': '1234',
+        'USER': 'hassaneldash',
+        'PASSWORD': 'hassaneldash',
         'HOST': 'localhost',
         'PORT': '5432',
     }

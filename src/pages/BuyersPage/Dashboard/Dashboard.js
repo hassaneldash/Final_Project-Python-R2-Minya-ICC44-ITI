@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useAuth } from '../context/AuthContext'
+import React, { useState } from "react";
+import { useAuth } from '../../context/AuthContext'
 import {
   BsFillArchiveFill,
   BsFillGrid3X3GapFill,
@@ -9,7 +9,6 @@ import {
 import {
   BarChart,
   Bar,
-  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
