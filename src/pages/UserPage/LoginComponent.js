@@ -38,21 +38,35 @@ const LoginComponent = () => {
       },
       validationSchema: LoginSchema,
       onSubmit: async (values) => {
+        //   try {
+        //     const response = await axios.get(
+        //       `http://127.0.0.1:8000/user/?email=${values.email}&password=${values.password}`
+        //     );
+        //     if (response.data.length > 0) {
+        //       const user = response.data[0];
+        //       sessionStorage.setItem(
+        //         "login",
+        //         JSON.stringify({ name: user.name, email: user.email })
+        //       );
+        //       setIsError(false);
+        //       redirectBasedOnRole(user.role);
+        //     } else {
+        //       setIsError(true);
+        //     }
+        //   } catch (error) {
+        //     console.error("Error logging in:", error);
+        //     setIsError(true);
+        //   }
+
+        // Regular login flow
         try {
-          const response = await axios.get(
-            `http://127.0.0.1:8000/user/?email=${values.email}&password=${values.password}`
+          const response = await axios.post(
+            "http://127.0.0.1:8000/validate-login/",
+            values
           );
-          if (response.data.length > 0) {
-            const user = response.data[0];
-            sessionStorage.setItem(
-              "login",
-              JSON.stringify({ name: user.name, email: user.email })
-            );
-            setIsError(false);
-            redirectBasedOnRole(user.role);
-          } else {
-            setIsError(true);
-          }
+          const { session_token, role } = response.data;
+          sessionStorage.setItem("session_token", session_token);
+          redirectBasedOnRole(role);
         } catch (error) {
           console.error("Error logging in:", error);
           setIsError(true);
@@ -60,12 +74,38 @@ const LoginComponent = () => {
       },
     });
 
+  // useEffect(() => {
+  //   if (sessionStorage.getItem("login") !== null) {
+  //     const user = JSON.parse(sessionStorage.getItem("login"));
+  //     redirectBasedOnRole(user.role);
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (sessionStorage.getItem("login") !== null) {
-      const user = JSON.parse(sessionStorage.getItem("login"));
-      redirectBasedOnRole(user.role);
+    const sessionToken = sessionStorage.getItem("session_token");
+    if (sessionToken) {
+      fetchUserRoleAndRedirect(sessionToken);
     }
   }, []);
+
+  const fetchUserRoleAndRedirect = async (sessionToken) => {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/login/",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${sessionToken}`,
+          },
+        }
+      );
+      const { role } = response.data;
+      redirectBasedOnRole(role);
+    } catch (error) {
+      console.error("Error fetching user role:", error);
+      setIsError(true);
+    }
+  };
 
   const redirectBasedOnRole = (role) => {
     if (role === "customer") {

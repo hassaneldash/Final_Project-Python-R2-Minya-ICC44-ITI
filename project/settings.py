@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # New Commit
     'corsheaders.middleware.CorsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -89,26 +90,26 @@ WSGI_APPLICATION = 'project.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'easytrade',
-        'USER': 'ramymedhat',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'easytrade',
-#         'USER': 'hassaneldash',
-#         'PASSWORD': 'hassaneldash',
+#         'USER': 'ramymedhat',
+#         'PASSWORD': '1234',
 #         'HOST': 'localhost',
 #         'PORT': '5432',
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'easytrade',
+        'USER': 'hassaneldash',
+        'PASSWORD': 'hassaneldash',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -157,6 +158,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CORS_ALLOW_ALL_ORIGINS = True
 # CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",  
-#     "http://127.0.0.1:3000",  
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
 # ]
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
