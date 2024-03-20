@@ -1,6 +1,5 @@
 .slider-item {
-  margin-top: 25px;
-  max-height: 690px !important;
+  max-height: 660px !important;
 }
 .slider-content {
   overflow-y: hidden !important;
