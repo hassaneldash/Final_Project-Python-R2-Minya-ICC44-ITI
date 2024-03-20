@@ -61,11 +61,11 @@ const LoginComponent = () => {
         // Regular login flow
         try {
           const response = await axios.post(
-            "http://127.0.0.1:8000/validate-login/",
+            "http://127.0.0.1:8000/login_api",
             values
           );
           const { session_token, role } = response.data;
-          sessionStorage.setItem("session_token", session_token);
+          sessionStorage.setItem("token", session_token);
           redirectBasedOnRole(role);
         } catch (error) {
           console.error("Error logging in:", error);

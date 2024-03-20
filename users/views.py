@@ -19,28 +19,50 @@ from datetime import timedelta
 
 ##################### generate jwt token which carries the information of the user login ##########################
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import authenticate
+from .models import User
+import jwt
+from datetime import datetime, timedelta
+
+SECRET_KEY = 'your_secret_key'
+REFRESH_TOKEN_SECRET = 'your_refresh_token_secret'
+
 @api_view(['POST'])
 def login(request):
     email = request.data.get('email')
     password = request.data.get('password')
+    user = authenticate(email=email, password=password)  # Assuming you have a custom authenticate method
 
-    user = User.objects.filter(email=email).first()
-    if not user or not user.password == password:
+    if user is None:
         return Response({'error': 'Wrong email or password'}, status=status.HTTP_401_UNAUTHORIZED)
+
     if not user.is_active:
         return Response({'error': 'Please activate your account'}, status=status.HTTP_401_UNAUTHORIZED)
 
-
-    payload = {
-        'id': user.id,
+    access_token_payload = {
+        'user_id': user.id,
         'email': user.email,
-        'name': user.name,
-        'role':user.role,
-        'password' : user.password,
+        'exp': datetime.utcnow() + timedelta(minutes=30),  # short lifespan for access token
+        'iat': datetime.utcnow(),
     }
 
-    token = jwt.encode(payload, 'secret_key', algorithm='HS256')
-    return Response({'success': 'Authentication successful', 'token': token}, status=status.HTTP_200_OK)
+    refresh_token_payload = {
+        'user_id': user.id,
+        'exp': datetime.utcnow() + timedelta(days=7),  # longer lifespan for refresh token
+        'iat': datetime.utcnow(),
+    }
+
+    access_token = jwt.encode(access_token_payload, SECRET_KEY, algorithm='HS256')
+    refresh_token = jwt.encode(refresh_token_payload, REFRESH_TOKEN_SECRET, algorithm='HS256')
+
+    return Response({
+        'success': 'Authentication successful',
+        'access_token': access_token,
+        'refresh_token': refresh_token
+    }, status=status.HTTP_200_OK)
 
 @api_view(['GET', 'POST'])
 def all_users(request):

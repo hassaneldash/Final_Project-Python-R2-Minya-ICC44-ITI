@@ -22,15 +22,15 @@ from products.views import ProductDetail, ProductList,ProductViewSet
 from project import settings
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
-from rest_framework import routers, permissions
+# from rest_framework import routers, permissions
 from reviews.views import ReviewList, ReviewDetail, ReviewViewSet
-from users.views import UserViewSet
+# from users.views import UserViewSet
 from payment.views import CheckoutAPIView
 
 router = DefaultRouter()
 router.register(r'products', ProductViewSet)
 router.register(r'reviews', ReviewViewSet)
-router.register(r'users', UserViewSet)
+# router.register(r'users', UserViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
