@@ -47,21 +47,6 @@ function SlideBarBuyer({ openSidebarToggle, OpenSidebar }) {
             <BsPeopleFill className="icon" /> Orders
           </li>
         </Link>
-        <Link to="#">
-          <li className="sidebar-list-item">
-            <BsListCheck className="icon" /> Inventory
-          </li>
-        </Link>
-        <Link to="#">
-          <li className="sidebar-list-item">
-            <BsMenuButtonWideFill className="icon" /> Reports
-          </li>
-        </Link>
-        <Link to="#">
-          <li className="sidebar-list-item">
-            <BsFillGearFill className="icon" /> Setting
-          </li>
-        </Link>
       </ul>
     </aside>
   );

@@ -13,7 +13,7 @@ function ShowBuyerProducts() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          // "https://api-generator.retool.com/u9XTxw/data"
+          // "https://api-generator.retool.com/u9XTxw/data" //with wtith
           "http://127.0.0.1:8000/products/"
         );
         setProducts(response.data);
