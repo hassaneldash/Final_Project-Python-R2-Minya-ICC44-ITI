@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     # 'products',
     # New Commit
     'corsheaders',
+    'payment',
+    'rest_framework',
+
 ]
 
 MIDDLEWARE = [
@@ -90,8 +93,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'easytrade',
-        'USER': 'ramymedhat',
-        'PASSWORD': '1234',
+        'USER': 'postgres',
+        'PASSWORD': 'Manar123arabi',
         'HOST': 'localhost',
         'PORT': '5432',
     }
