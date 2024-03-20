@@ -1,4 +1,3 @@
-import uuid
 from django.shortcuts import render
 from rest_framework import generics,viewsets
 from .models import User
@@ -8,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import uuid
 # Create your views here.
 
 
@@ -23,8 +23,15 @@ class UserList(APIView):
         else:
             users = User.objects.all()
 
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+        if users:
+            users.session_token = uuid.uuid4()  # Generate session token
+            print(users.session_token)
+            users.save()
+            return JsonResponse({'session_token': str(users.session_token), 'role': user.role})
+        else:
+            return JsonResponse({'error': 'Invalid credentials'}, status=401)
+        # serializer = UserSerializer(users, many=True)
+        # return Response(serializer.data)
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -169,4 +176,3 @@ def validate_login(request):
             return JsonResponse({'session_token': str(user.session_token), 'role': user.role})
         else:
             return JsonResponse({'error': 'Invalid credentials'}, status=401)
-
