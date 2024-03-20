@@ -10,7 +10,6 @@ function AddBuyerProduct() {
     brand: "",
     price: "",
     category: "",
-    inventory: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -45,22 +44,37 @@ function AddBuyerProduct() {
 
     return errors;
   };
-
   const handleAddProduct = (e) => {
     e.preventDefault(); // Prevent form submission
     const validationErrors = validateFormData(formData);
-
+  
     if (Object.keys(validationErrors).length === 0) {
+      const formDataToSend = new FormData();
+      formDataToSend.append('title', formData.title);
+      formDataToSend.append('description', formData.description);
+      formDataToSend.append('price', formData.price);
+      formDataToSend.append('discountPercentage', formData.discountPercentage);
+      formDataToSend.append('rating', formData.rating);
+      formDataToSend.append('stock', formData.stock);
+      formDataToSend.append('brand', formData.brand);
+      formDataToSend.append('category', formData.category);
+      formDataToSend.append('thumbnail', formData.thumbnail); // Append the image file to FormData
+  
       axios
-        .post("http://127.0.0.1:8000/products/", formData)
+        .post("http://127.0.0.1:8000/products/", formDataToSend)
         .then((response) => {
           setProducts([...products, response.data]);
+          // Reset form data after successful submission
           setFormData({
-            name: "",
-            brand: "",
+            title: "",
+            description: "",
             price: "",
+            discountPercentage: "",
+            rating: "",
+            stock: "",
+            brand: "",
             category: "",
-            inventory: "",
+            thumbnail: "",
           });
           loadData();
           setShowSuccessMessage(true); // Set state to show success message
@@ -85,6 +99,7 @@ function AddBuyerProduct() {
       setErrors(validationErrors);
     }
   };
+  
 
   const loadData = async () => {
     try {
@@ -108,6 +123,25 @@ function AddBuyerProduct() {
     setOpenSidebarToggle(!openSidebarToggle);
   };
 
+// Handle thumbonals images
+  const handleImageUpload = (file) => {
+    const reader = new FileReader();
+  
+    reader.onloadend = () => {
+      setFormData({
+        ...formData,
+        thumbnail: file, // Set the base64 encoded image data in formData
+      });
+    };
+  
+    if (file) {
+      reader.readAsDataURL(file); // Read the file as data URL
+    }
+  };
+
+
+
+
   return (
     <>
       <div className="grid-container">
@@ -115,32 +149,34 @@ function AddBuyerProduct() {
           openSidebarToggle={openSidebarToggle}
           OpenSidebar={OpenSidebar}
         />
-        <form className="formclss" onSubmit={handleAddProduct}>
+        <form className="formclss" onSubmit={handleAddProduct} encType="multipart/form-data">
           <h1 className="product-list-header">Add Products</h1>
           <label className="labels">
             Name:
             <input
               type="text"
-              name="name"
-              value={formData.name}
+              name="title"
+              value={formData.title}
               onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
+                setFormData({ ...formData, title: e.target.value })
               }
             />
-            {displayError("name")}
+            {displayError("title")}
           </label>
+          
           <label className="labels">
-            Brand:
+            Description:
             <input
               type="text"
-              name="brand"
-              value={formData.brand}
+              name="category"
+              value={formData.description}
               onChange={(e) =>
-                setFormData({ ...formData, brand: e.target.value })
+                setFormData({ ...formData, description: e.target.value })
               }
             />
-            {displayError("brand")}
+            {displayError("description")}
           </label>
+
           <label className="labels">
             Price:
             <input
@@ -153,6 +189,61 @@ function AddBuyerProduct() {
             />
             {displayError("price")}
           </label>
+
+          <label className="labels">
+          DiscountPercentage:
+            <input
+              type="text"
+              name="discountPercentage"
+              value={formData.discountPercentage}
+              onChange={(e) =>
+                setFormData({ ...formData, discountPercentage: e.target.value })
+              }
+            />
+            {displayError("discountPercentage")}
+          </label>
+
+          <label className="labels">
+           Rating:
+            <input
+              type="text"
+              name="rating"
+              value={formData.rating}
+              onChange={(e) =>
+                setFormData({ ...formData, rating: e.target.value })
+              }
+            />
+            {displayError("rating")}
+          </label>
+
+          <label className="labels">
+           Stock:
+            <input
+              type="text"
+              name="stock"
+              value={formData.stock}
+              onChange={(e) =>
+                setFormData({ ...formData, stock: e.target.value })
+              }
+            />
+            {displayError("stock")}
+          </label>
+
+
+
+          <label className="labels">
+            Brand:
+            <input
+              type="text"
+              name="brand"
+              value={formData.brand}
+              onChange={(e) =>
+                setFormData({ ...formData, brand: e.target.value })
+              }
+            />
+            {displayError("brand")}
+          </label>
+         
           <label className="labels">
             Category:
             <input
@@ -165,6 +256,26 @@ function AddBuyerProduct() {
             />
             {displayError("category")}
           </label>
+
+         
+
+        <label className="labels">
+          Thumbnail:
+          <input
+            type="file"
+            name="thumbnail"
+            accept="image/*"
+            onChange={(e) => handleImageUpload(e.target.files[0])}
+          />
+          {displayError("thumbnail")}
+        </label>
+         
+
+
+
+
+
+
           <button type="submit" className="add-product-button">
             Add Product
           </button>
