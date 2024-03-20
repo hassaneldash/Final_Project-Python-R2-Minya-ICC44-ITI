@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'reviews',
     'products',
     # New Commit
-    'corsheaders',
     'Categories',
     'rest_framework',
+     'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -143,8 +143,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CORS_ALLOW_ALL_ORIGINS = True  # This allows all origins; adjust as needed for security

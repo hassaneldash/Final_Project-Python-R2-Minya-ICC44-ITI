@@ -48,7 +48,7 @@ function ShowBuyerProducts() {
       try {
         await axios.delete(
           // `https://api-generator.retool.com/u9XTxw/data/${id}`
-          `http://127.0.0.1:8000/products/${id}`
+          `http://127.0.0.1:8000/products/${id}/`
         );
         loadData();
         console.log("Delete successful");
@@ -87,6 +87,7 @@ function ShowBuyerProducts() {
                   <th>Brand</th>
                   <th>Price</th>
                   <th>Category</th>
+                  <th>stock</th>
                   <th>Active</th>
                 </tr>
               </thead>
@@ -97,6 +98,7 @@ function ShowBuyerProducts() {
                     <td>{product.brand}</td>
                     <td>{product.price}</td>
                     <td>{product.category}</td>
+                    <td>{product.stock}</td>
                     <td>
                       <button
                         className="primarys-btn"

@@ -6,10 +6,16 @@ import SlideBarBuyer from "../Dashboard/SlideBarBuyer";
 
 function AddBuyerProduct() {
   const [formData, setFormData] = useState({
-    name: "",
-    brand: "",
+    title: "",
+    description: "",
     price: "",
+    discountPercentage: "",
+    rating: "",
+    stock: "",
+    brand: "",
     category: "",
+    thumbnail: "",
+
   });
 
   const [errors, setErrors] = useState({});
@@ -27,21 +33,45 @@ function AddBuyerProduct() {
   const validateFormData = (data) => {
     const errors = {};
 
-    if (!data.name.trim()) {
-      errors.name = "Name is required";
-    }
-    if (!data.brand.trim()) {
-      errors.brand = "Brand is required";
-    }
-    if (!data.price.trim()) {
-      errors.price = "Price is required";
-    } else if (isNaN(data.price)) {
-      errors.price = "Price must be a valid number";
-    }
-    if (!data.category.trim()) {
-      errors.category = "category is required";
-    }
 
+    const validateFormData = (data) => {
+      const errors = {};
+    
+      if (!data.title.trim()) {
+        errors.title = "Name is required";
+      }
+      if (!data.description.trim()) {
+        errors.description = "description is required";
+      }
+      if (!data.price.trim()) {
+        errors.price = "price is required";
+      }
+      if (!data.discountPercentage.trim()) {
+        errors.discountPercentage = "discountPercentage is required";
+      }
+      if (!data.rating.trim()) {
+        errors.rating = "rating is required";
+      }
+      if (!data.stock.trim()) {
+        errors.stock = "stock is required";
+      }
+      if (!data.brand.trim()) {
+        errors.brand = "brand is required";
+      }
+      if (!data.category.trim()) {
+        errors.category = "category is required";
+      }
+      if (!data.thumbnail) {
+        errors.thumbnail = "thumbnail is required";
+      }
+    
+      return errors;
+    };
+
+
+    
+  
+   
     return errors;
   };
   const handleAddProduct = (e) => {
@@ -269,12 +299,6 @@ function AddBuyerProduct() {
           />
           {displayError("thumbnail")}
         </label>
-         
-
-
-
-
-
 
           <button type="submit" className="add-product-button">
             Add Product
