@@ -26,7 +26,6 @@ from rest_framework import routers, permissions
 from reviews.views import ReviewList, ReviewDetail, ReviewViewSet
 from users.views import UserViewSet
 from payment.views import CheckoutAPIView
-from users.views import login, validate_login
 
 router = DefaultRouter()
 router.register(r'products', ProductViewSet)
@@ -36,12 +35,10 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('user/', include('users.urls')),
+    path('', include('users.urls')),
     path('review/', include('reviews.urls')),
     path('products/', csrf_exempt(ProductList.as_view()), name='product-list'),
     path('products/<int:pk>/', ProductDetail.as_view(), name='product-detail'),
     path('categories/', CategoryList.as_view(), name='category-list'),
     path('checkout/', CheckoutAPIView.as_view(), name='checkout'),
-    path('login/', login, name='login'),  # URL for login endpoint
-    path('validate-login/', validate_login, name='validate_login'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
