@@ -10,7 +10,7 @@ function EditBuyerProducts() {
     name: "",
     brand: "",
     price: "",
-    inventory: "",
+    Category: "",
   });
   const [errors, setErrors] = useState({});
   const [showSuccessMessage, setShowSuccessMessage] = useState(false); // State to control success message visibility
@@ -19,8 +19,8 @@ function EditBuyerProducts() {
   const validateFormData = (data) => {
     const errors = {};
 
-    if (!data.name || data.name.trim() === "") {
-      errors.name = "Name is required";
+    if (!data.title || data.title.trim() === "") {
+      errors.title = "Name is required";
     }
 
     if (!data.brand || data.brand.trim() === "") {
@@ -35,10 +35,6 @@ function EditBuyerProducts() {
       errors.category = "Category is required";
     }
 
-    if (!data.inventory || data.inventory.trim() === "") {
-      errors.inventory = "Inventory is required";
-    }
-
     return errors;
   };
 
@@ -50,7 +46,8 @@ function EditBuyerProducts() {
     if (Object.keys(validationErrors).length === 0) {
       try {
         await axios.put(
-          `https://api-generator.retool.com/u9XTxw/data/${id}`,
+          // `https://api-generator.retool.com/u9XTxw/data/${id}`,
+          `http://127.0.0.1:8000/products/${id}/`,
           formData
         );
         setShowSuccessMessage(true); // Show success message
@@ -73,7 +70,8 @@ function EditBuyerProducts() {
     const getProduct = async () => {
       try {
         const response = await axios.get(
-          `https://api-generator.retool.com/u9XTxw/data/${id}`
+          // `https://api-generator.retool.com/u9XTxw/data/${id}`
+          `http://127.0.0.1:8000/products/${id}/`
         );
         setFormData(response.data); // Set formData to populate input fields
       } catch (error) {
@@ -108,10 +106,10 @@ function EditBuyerProducts() {
             Name:
             <input
               type="text"
-              name="name"
-              value={formData.name}
+              name="title"
+              value={formData.title}
               onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
+                setFormData({ ...formData, title: e.target.value })
               }
             />
             {displayError("name")}
@@ -144,16 +142,16 @@ function EditBuyerProducts() {
           </label>
           <br />
           <label>
-            Inventory:
+            Category:
             <input
               type="text"
-              name="inventory"
-              value={formData.inventory}
+              name="category"
+              value={formData.Category}
               onChange={(e) =>
-                setFormData({ ...formData, inventory: e.target.value })
+                setFormData({ ...formData, category: e.target.value })
               }
             />
-            {displayError("inventory")}
+            {displayError("category")}
           </label>
           <br />
           <button type="submit" className="add-product-button">

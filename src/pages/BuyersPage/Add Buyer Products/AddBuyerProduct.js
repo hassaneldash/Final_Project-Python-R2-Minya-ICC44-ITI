@@ -20,7 +20,7 @@ function AddBuyerProduct() {
 
   useEffect(() => {
     axios
-      .get("https://api-generator.retool.com/u9XTxw/data")
+      .get("http://127.0.0.1:8000/products/")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
@@ -39,8 +39,8 @@ function AddBuyerProduct() {
     } else if (isNaN(data.price)) {
       errors.price = "Price must be a valid number";
     }
-    if (!data.inventory.trim()) {
-      errors.inventory = "Inventory is required";
+    if (!data.category.trim()) {
+      errors.category = "category is required";
     }
 
     return errors;
@@ -52,7 +52,7 @@ function AddBuyerProduct() {
 
     if (Object.keys(validationErrors).length === 0) {
       axios
-        .post("https://api-generator.retool.com/u9XTxw/data", formData)
+        .post("http://127.0.0.1:8000/products/", formData)
         .then((response) => {
           setProducts([...products, response.data]);
           setFormData({
@@ -89,7 +89,7 @@ function AddBuyerProduct() {
   const loadData = async () => {
     try {
       const res = await axios.get(
-        "https://api-generator.retool.com/u9XTxw/data"
+        "http://127.0.0.1:8000/products/"
       );
       setProducts(res.data);
     } catch (error) {
@@ -154,16 +154,16 @@ function AddBuyerProduct() {
             {displayError("price")}
           </label>
           <label className="labels">
-            Inventory:
+            Category:
             <input
               type="text"
-              name="inventory"
-              value={formData.inventory}
+              name="category"
+              value={formData.category}
               onChange={(e) =>
-                setFormData({ ...formData, inventory: e.target.value })
+                setFormData({ ...formData, category: e.target.value })
               }
             />
-            {displayError("inventory")}
+            {displayError("category")}
           </label>
           <button type="submit" className="add-product-button">
             Add Product
