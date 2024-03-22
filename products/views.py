@@ -18,7 +18,6 @@ class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['category', 'price']  
     search_fields = ['title', 'description']
@@ -32,9 +31,9 @@ def search_products(request):
             Q(description__icontains=search_term)
         )
         serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
+        return Response({'products': serializer.data})  
     else:
-        return Response([])
+        return Response({'products': []}) 
 
 @api_view(['GET'])
 def filter_products(request):
