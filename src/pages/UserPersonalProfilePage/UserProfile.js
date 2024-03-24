@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
-import UserSidebar from '../../components/UserProfileComponents/UserSidebar'
-import AccountSettings from '../../components/UserProfileComponents/AccountSettings'
-import './UserProfile.css'
-import ChangePassword from '../../components/UserProfileComponents/ChangePassword'
-import YourOrders from '../../components/UserProfileComponents/YourOrders'
-import UserAddress from '../../components/UserProfileComponents/UserAddress'
-import LegalNotice from '../../components/UserProfileComponents/LegalNotice'
+import React, { useEffect, useState } from "react";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+import UserSidebar from "../../components/UserProfileComponents/UserSidebar";
+import AccountSettings from "../../components/UserProfileComponents/AccountSettings";
+import "./UserProfile.css";
+import ChangePassword from "../../components/UserProfileComponents/ChangePassword";
+import YourOrders from "../../components/UserProfileComponents/YourOrders";
+import UserAddress from "../../components/UserProfileComponents/UserAddress";
+import LegalNotice from "../../components/UserProfileComponents/LegalNotice";
 
 const UserProfile = () => {
+  //Basic of profile Active page
+  const { activepage } = useParams();
 
-    //Basic of profile Active page 
-    const {activepage} = useParams()
-
-    
   /** Redirection */
   const navigate_login = useNavigate();
   useEffect(() => {
@@ -32,7 +35,6 @@ const UserProfile = () => {
   };
   /** End of Redirection */
 
-    
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,7 +44,6 @@ const UserProfile = () => {
     email: "",
   });
 
-  
   /** Redirection */
   useEffect(() => {
     if (localStorage.getItem("login") !== null) {
@@ -60,33 +61,36 @@ const UserProfile = () => {
     } else {
       navigate("/user");
     }
-  
-  },);
+  });
 
-  
-    // alert(activepage)
+  // alert(activepage)
   return (
-    <div className='userprofile'>
- 
-
-         <div className='userprofilein'>
-            <div className='left'>
-            <div className="card">
-            <img height="250px"  src="https://lh3.googleusercontent.com/oUUiPB9sq3ACq4bUaRmo8pgvC4FUpRRrQKcGIBSOsafawZfRpF1vruFeYt6uCfL6wGDQyvOi6Ez9Bpf1Fb7APKjIyVsft7FLGR6QqdRFTiceNQBm1In9aZyrXp33cZi9pUNqjHASdA=s170-no" alt="Person" class="card__image"/>
-            <h1 style={{ textAlign: 'center', fontSize: '20px' }}>Welcome {formData.name}</h1>
-            </div>
-              <UserSidebar activepage={activepage}/>
-            </div>
-            <div className='right'>
-              {activepage === 'accountsettings' && <AccountSettings/>}
-              {/* {activepage === 'changepassword' && <ChangePassword/>} */}
-              {activepage === 'yourorders' && <YourOrders/>}
-              {/* {activepage === 'address' && <UserAddress/>} */}
-              {activepage === 'legalnotice' && <LegalNotice/>}
-            </div>
-         </div>
-  </div>
-  )
-}
+    <div className="userprofile">
+      <div className="userprofilein">
+        <div className="left">
+          <div className="card">
+            <img
+              height="250px"
+              src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+              alt="Person"
+              class="card__image"
+            />
+            <h1 style={{ textAlign: "center", fontSize: "20px" }}>
+              Welcome {formData.name}
+            </h1>
+          </div>
+          <UserSidebar activepage={activepage} />
+        </div>
+        <div className="right">
+          {activepage === "accountsettings" && <AccountSettings />}
+          {/* {activepage === 'changepassword' && <ChangePassword/>} */}
+          {activepage === "yourorders" && <YourOrders />}
+          {/* {activepage === 'address' && <UserAddress/>} */}
+          {activepage === "legalnotice" && <LegalNotice />}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default UserProfile;

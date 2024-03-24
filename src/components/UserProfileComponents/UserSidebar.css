@@ -1,78 +1,74 @@
+/* Base styling for sidebar */
 .usersidebar {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* consistent spacing between items */
 }
 
-.usersidebar .s1 , .usersidebar .s2{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 20px;
+/* Removes text decoration for all links within the sidebar */
+.usersidebar a {
+  text-decoration: none;
 }
 
-.usersidebar .s1 svg {
-    width: 30px;
-    height: 30px;
-    color: gray;
+/* Flex layout for both active and inactive state items */
+.usersidebar .s1,
+.usersidebar .s2 {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* space between icon and text */
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.usersidebar .s2 svg {
-    width: 30px;
-    height: 30px;
-    color: rgb(255, 255, 255);
+/* Styling for inactive state items */
+.usersidebar .s1 {
+  color: gray;
+  &:hover {
+    background-color: #f6f6f6;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  }
 }
 
-.usersidebar .s1:hover{
-    background-color: rgb(246, 246, 246);
-    border-radius: 5px;
-    cursor: pointer;
-    color: grey;
+/* Styling for active state items */
+.usersidebar .s2 {
+  background-color: var(--col1);
+  color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
-
-.usersidebar .s2{
-    background-color: var(--col1);
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
+/* Styling for svg icons */
+.usersidebar svg {
+  width: 30px;
+  height: 30px;
 }
+
+/* Responsive layout adjustments for tablets */
 @media (max-width: 800px) {
-    .usersidebar span{
-        font-size: 12px;
-    }
+  .usersidebar span {
+    font-size: 12px;
+  }
 }
+
+/* Responsive layout adjustments for mobile */
 @media (max-width: 500px) {
-    .usersidebar {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-        padding: 10px;
-    }
-    .usersidebar .s1 , .usersidebar .s2{
-        display: flex;
-        align-items: center;
-        gap: 2px;
-        padding: 3px;
-    }
-    .usersidebar .s1{
-        background-color: white;
-        border-radius: 25px;
-        cursor: pointer;
-        box-shadow:  0px 0px 10px 0px rgba(0,0,0,0.1);
-        padding: 5px 20px;
-    }
-    .usersidebar .s2{
-        border-radius: 25px;
-        cursor: pointer;
-        box-shadow:  0px 0px 10px 0px rgba(0,0,0,0.1);
-        padding: 5px 20px;
- 
-    }
-    .usersidebar span{
-        font-size: 12px;
-    }
+  .usersidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+  }
+  .usersidebar .s1,
+  .usersidebar .s2 {
+    gap: 2px;
+    padding: 5px 20px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  }
+  .usersidebar span {
+    font-size: 12px;
+  }
 }
