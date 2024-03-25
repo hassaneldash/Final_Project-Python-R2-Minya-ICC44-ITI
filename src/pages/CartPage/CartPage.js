@@ -104,13 +104,13 @@ const CartPage = () => {
                     <span className="cart-ctxt">{idx + 1}</span>
                   </div>
 
-                  <div className="cart-ctd ">
-                    <img
-                      src={cart?.thumbnail}
-                      alt=""
-                      className="cart-modal-item-img"
-                    />
-                  </div>
+                  <Link to={`/product/${cart.id}`}>
+                      <img
+                        src={cart?.thumbnail}
+                        alt=""
+                        className="cart-modal-item-img"
+                      />
+                    </Link>
 
                   <div className="cart-ctd">
                     <span className="cart-ctxt">{cart?.title}</span>

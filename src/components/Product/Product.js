@@ -9,6 +9,7 @@ import {
 import "./Product.css";
 
 const Product = ({ product }) => {
+  console.log(product)
   // const dispatch = useDispatch();
   // const favorites = useSelector((state) => state.favorites);
   const [isHovered, setIsHovered] = useState(false);
@@ -89,7 +90,7 @@ const Product = ({ product }) => {
   return (
     <Link to={`/product/${product?.id}`} key={product?.id}>
       <div className="product-item bg-white">
-        <div className="category">{product?.category}</div>
+        <div className="category">{product?.category_name}</div>
 
         {/* <button
           className="badge"

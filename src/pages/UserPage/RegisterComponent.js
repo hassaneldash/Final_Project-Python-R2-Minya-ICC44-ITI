@@ -54,7 +54,7 @@ function RegisterComponent() {
 
         try {
           const response = await axios.post(
-            "http://127.0.0.1:8000/user/",
+            "http://127.0.0.1:8000/users/",
             values
           );
           console.log("User registered:", response.data);

@@ -5,8 +5,6 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 
-
-
 const loginPat = /^[a-zA-Z0-9._]+@[a-z]{1,8}\.(com|eg|gov|edu)$/;
 const passwordRegex =
   /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=])(?=.*[^\w\d\s]).{8,}$/;
@@ -32,10 +30,6 @@ const LoginComponent = () => {
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
 
-
-  
-
-
   const { handleSubmit, values, errors, handleBlur, touched, handleChange } =
     useFormik({
       initialValues: {
@@ -45,15 +39,18 @@ const LoginComponent = () => {
       validationSchema: LoginSchema,
       onSubmit: async (values) => {
         try {
-          const response = await axios.get(
-            `http://127.0.0.1:8000/user/?email=${values.email}&password=${values.password}`
+          const response = await axios.post(
+            `http://127.0.0.1:8000/login/`,
+            values
           );
-          if (response.data.length > 0) {
-            const user = response.data[0];
+          if (response.status === 200) {
+            const { access, refresh, user } = response.data;
+            localStorage.setItem("accessToken", access); // Store access token
+            localStorage.setItem("refreshToken", refresh); // Store refresh token
             localStorage.setItem(
               "login",
               JSON.stringify({
-                id : user.id,
+                id: user.id,
                 name: user.name,
                 email: user.email,
                 role: user.role,
@@ -177,7 +174,17 @@ const LoginComponent = () => {
           Forgot your password?
         </a>
 
-        <span className="span">By clicking " Login," you agree to our <a className="a1" href="http://">Terms of Use</a> and our <a className="a1" href="http://">Privacy Policy</a>.</span>
+        <span className="span">
+          By clicking " Login," you agree to our{" "}
+          <a className="a1" href="http://">
+            Terms of Use
+          </a>{" "}
+          and our{" "}
+          <a className="a1" href="http://">
+            Privacy Policy
+          </a>
+          .
+        </span>
         {isError && <p className="error">Incorrect email or password</p>}
         <Button className="button my-3" variant="primary" type="submit">
           Login

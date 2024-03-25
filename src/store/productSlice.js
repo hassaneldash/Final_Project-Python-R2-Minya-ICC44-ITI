@@ -49,7 +49,7 @@ export const fetchAsyncProducts = createAsyncThunk(
   "products/fetch",
   async (limit) => {
     try {
-      const response = await axios.get(`${BASE_URL}products/?limit=${limit}`);
+      const response = await axios.get(`${BASE_URL}product/?limit=${limit}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -63,7 +63,7 @@ export const fetchAsyncProductSingle = createAsyncThunk(
   "product-single/fetch",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}products/${id}/`);
+      const response = await axios.get(`${BASE_URL}product/${id}/`);
       console.log("Product fetched successfully", response.data);
       return response.data;
     } catch (error) {

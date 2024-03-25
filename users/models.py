@@ -12,7 +12,7 @@ class User(models.Model):
     role = models.CharField(max_length=50)
     
     def __str__(self):
-        return f"User name {self.name} and email {self.email}"
+        return f"Username {self.name} and email {self.email}"
 
 
 class Verification(models.Model):

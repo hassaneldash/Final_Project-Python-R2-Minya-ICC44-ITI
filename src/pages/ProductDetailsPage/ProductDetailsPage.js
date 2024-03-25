@@ -44,6 +44,8 @@ const ProductDetailsPage = () => {
   const [sessionLogin, setSessionLogin] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
 
+  console.log(product.images)
+
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -161,7 +163,7 @@ const ProductDetailsPage = () => {
                 <div className="product-img-zoom img-fluid">
                   {product.images && product.images.length > 0 && (
                     <img
-                      src={product.images[selectedImage]?.image}
+                      src={product.images[selectedImage]}
                       alt=""
                       className="img-cover"
                     />
@@ -177,7 +179,7 @@ const ProductDetailsPage = () => {
                         onClick={() => handleThumbnailClick(index)}
                       >
                         <img
-                          src={image.image}
+                          src={image}
                           alt=""
                           className="img-cover img-fluid"
                         />
@@ -244,8 +246,8 @@ const ProductDetailsPage = () => {
                   <div className="your-store-category">
                     <span className="text-orange fw-5">Category:</span>
                     <span className="mx-1 text-capitalize">
-                      {product?.category
-                        ? product.category.replace("-", " ")
+                      {product?.category_name
+                        ? product.category_name.replace("-", " ")
                         : ""}
                     </span>
                   </div>

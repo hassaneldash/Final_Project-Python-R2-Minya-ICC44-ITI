@@ -52,10 +52,10 @@ INSTALLED_APPS = [
     "django_filters",
 ]
 
-# CORS_ORIGIN_WHITELIST = [
-#     "http://localhost:3000",
-#     "http://127.0.0.1:3000",
-# ]
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
 
 MIDDLEWARE = [
@@ -71,10 +71,10 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
 ]
 
-# CORS_ORIGIN_WHITELIST = [
-#     "http://localhost:3000",
-#     "http://127.0.0.1:3000",
-# ]
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
 ROOT_URLCONF = "project.urls"
 
@@ -122,16 +122,16 @@ WSGI_APPLICATION = "project.wsgi.application"
 # =======
 
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "easytrade",
-#         "USER": "hassaneldash",
-#         "PASSWORD": "hassaneldash",
-#         "HOST": "localhost",
-#         "PORT": "5432",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "easytrade",
+        "USER": "hassaneldash",
+        "PASSWORD": "hassaneldash",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+}
 
 # DATABASES = {
 #     "default": {
@@ -144,16 +144,16 @@ WSGI_APPLICATION = "project.wsgi.application"
 #     }
 # }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "easytrade",
-        "USER": "ramymedhat",
-        "PASSWORD": "1234",
-        "HOST": "localhost",
-        "PORT": "5432",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "easytrade",
+#         "USER": "ramymedhat",
+#         "PASSWORD": "1234",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
 
 
 # Password validation
